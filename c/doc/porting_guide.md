@@ -37,16 +37,16 @@ There are also a number of components that must be implemented, depending on the
 
 - In the adapters folder, create the following .c files that implement the platform-specific interfaces:
 
-   -  HttpApi\_\<Library\>.c.
+   -  httpapi\_\<Library\>.c.
 
-   - Lock\_\<Library\>.c
+   - lock\_\<Library\>.c
 
-   - ThreadApi\_\<Library\>.c
+   - threadapi\_\<Library\>.c
 
 - In each of these files, implement the functions provided in the header files, relying on the APIs of the libraries provided for that specific platform. You can see the implementation of these components provided for the platforms already supported in the SDK, under .\\common\\adapters. For more information, also refer to the specification for modules in the .\\common\\doc folder.
 
 <a name="httpapi"/>
-## HttpApi\_\<Library\>.c
+## httpapi\_\<Library\>.c
 
 ### HTTPAPI\_RESULT HTTPAPI\_Init(void);
 
@@ -106,7 +106,7 @@ Sets the option named *optionName* bearing the value *value* for the HTTP_HANDLE
 
 
 <a name="lockapi"/>
-## Lock\_\<Library\>.c
+## lock\_\<Library\>.c
 
 ### LOCK\_HANDLE Lock\_Init(void);
 
