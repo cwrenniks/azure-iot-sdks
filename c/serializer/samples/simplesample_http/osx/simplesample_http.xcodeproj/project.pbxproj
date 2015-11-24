@@ -1,0 +1,317 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EE04F5F01C04DA6E006D3D4B /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE04F5EF1C04DA6E006D3D4B /* main.mm */; };
+		EE04F6B51C04E9BF006D3D4B /* libcommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE04F6B31C04E8E2006D3D4B /* libcommon.a */; };
+		EE04F6B81C04EA6E006D3D4B /* simplesample_http.c in Sources */ = {isa = PBXBuildFile; fileRef = EE04F6B61C04EA6E006D3D4B /* simplesample_http.c */; };
+		EE04F6BA1C04EB9B006D3D4B /* libserializer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE04F6B91C04EB9B006D3D4B /* libserializer.a */; };
+		EE04F6C21C04ED25006D3D4B /* iothub_client.c in Sources */ = {isa = PBXBuildFile; fileRef = EE04F6BE1C04ED25006D3D4B /* iothub_client.c */; };
+		EE04F6C31C04ED25006D3D4B /* iothub_message.c in Sources */ = {isa = PBXBuildFile; fileRef = EE04F6BF1C04ED25006D3D4B /* iothub_message.c */; };
+		EE04F6C41C04ED25006D3D4B /* iothubtransporthttp.c in Sources */ = {isa = PBXBuildFile; fileRef = EE04F6C01C04ED25006D3D4B /* iothubtransporthttp.c */; };
+		EE04F6C51C04ED25006D3D4B /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = EE04F6C11C04ED25006D3D4B /* version.c */; };
+		EE04F6C71C04ED5D006D3D4B /* httpapi_osx.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE04F6C61C04ED5D006D3D4B /* httpapi_osx.mm */; };
+		EE04F6C91C04EE1C006D3D4B /* iothub_client_ll.c in Sources */ = {isa = PBXBuildFile; fileRef = EE04F6C81C04EE1C006D3D4B /* iothub_client_ll.c */; };
+		EE04F6CC1C04EE69006D3D4B /* threadapi_pthreads.c in Sources */ = {isa = PBXBuildFile; fileRef = EE04F6CB1C04EE69006D3D4B /* threadapi_pthreads.c */; };
+		EE04F6CE1C04EEB4006D3D4B /* lock_pthreads.c in Sources */ = {isa = PBXBuildFile; fileRef = EE04F6CD1C04EEB4006D3D4B /* lock_pthreads.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		EE04F5EA1C04DA6E006D3D4B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		EE04F5EC1C04DA6E006D3D4B /* simplesample_http */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = simplesample_http; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE04F5EF1C04DA6E006D3D4B /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		EE04F6B31C04E8E2006D3D4B /* libcommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcommon.a; path = ../../../../../../build_sdks/common/Debug/libcommon.a; sourceTree = "<group>"; };
+		EE04F6B61C04EA6E006D3D4B /* simplesample_http.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = simplesample_http.c; sourceTree = "<group>"; };
+		EE04F6B71C04EA6E006D3D4B /* simplesample_http.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simplesample_http.h; sourceTree = "<group>"; };
+		EE04F6B91C04EB9B006D3D4B /* libserializer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libserializer.a; path = ../../../../../../build_sdks/serializer/Debug/libserializer.a; sourceTree = "<group>"; };
+		EE04F6BE1C04ED25006D3D4B /* iothub_client.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = iothub_client.c; path = ../../../../../iothub_client/src/iothub_client.c; sourceTree = "<group>"; };
+		EE04F6BF1C04ED25006D3D4B /* iothub_message.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = iothub_message.c; path = ../../../../../iothub_client/src/iothub_message.c; sourceTree = "<group>"; };
+		EE04F6C01C04ED25006D3D4B /* iothubtransporthttp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = iothubtransporthttp.c; path = ../../../../../iothub_client/src/iothubtransporthttp.c; sourceTree = "<group>"; };
+		EE04F6C11C04ED25006D3D4B /* version.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = version.c; path = ../../../../../iothub_client/src/version.c; sourceTree = "<group>"; };
+		EE04F6C61C04ED5D006D3D4B /* httpapi_osx.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = httpapi_osx.mm; path = ../../../../../common/adapters/httpapi_osx.mm; sourceTree = "<group>"; };
+		EE04F6C81C04EE1C006D3D4B /* iothub_client_ll.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = iothub_client_ll.c; path = ../../../../../iothub_client/src/iothub_client_ll.c; sourceTree = "<group>"; };
+		EE04F6CB1C04EE69006D3D4B /* threadapi_pthreads.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = threadapi_pthreads.c; path = ../../../../../common/adapters/threadapi_pthreads.c; sourceTree = "<group>"; };
+		EE04F6CD1C04EEB4006D3D4B /* lock_pthreads.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lock_pthreads.c; path = ../../../../../common/adapters/lock_pthreads.c; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EE04F5E91C04DA6E006D3D4B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EE04F6B51C04E9BF006D3D4B /* libcommon.a in Frameworks */,
+				EE04F6BA1C04EB9B006D3D4B /* libserializer.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EE04F5E31C04DA6E006D3D4B = {
+			isa = PBXGroup;
+			children = (
+				EE04F6B91C04EB9B006D3D4B /* libserializer.a */,
+				EE04F6B31C04E8E2006D3D4B /* libcommon.a */,
+				EE04F5EE1C04DA6E006D3D4B /* simplesample_http */,
+				EE04F5ED1C04DA6E006D3D4B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EE04F5ED1C04DA6E006D3D4B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EE04F5EC1C04DA6E006D3D4B /* simplesample_http */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EE04F5EE1C04DA6E006D3D4B /* simplesample_http */ = {
+			isa = PBXGroup;
+			children = (
+				EE04F6CA1C04EE55006D3D4B /* adapters */,
+				EE04F6BD1C04ED11006D3D4B /* iothub_client */,
+				EE04F6B61C04EA6E006D3D4B /* simplesample_http.c */,
+				EE04F6B71C04EA6E006D3D4B /* simplesample_http.h */,
+				EE04F5EF1C04DA6E006D3D4B /* main.mm */,
+			);
+			path = simplesample_http;
+			sourceTree = "<group>";
+		};
+		EE04F6BD1C04ED11006D3D4B /* iothub_client */ = {
+			isa = PBXGroup;
+			children = (
+				EE04F6C81C04EE1C006D3D4B /* iothub_client_ll.c */,
+				EE04F6C61C04ED5D006D3D4B /* httpapi_osx.mm */,
+				EE04F6BE1C04ED25006D3D4B /* iothub_client.c */,
+				EE04F6BF1C04ED25006D3D4B /* iothub_message.c */,
+				EE04F6C01C04ED25006D3D4B /* iothubtransporthttp.c */,
+				EE04F6C11C04ED25006D3D4B /* version.c */,
+			);
+			name = iothub_client;
+			sourceTree = "<group>";
+		};
+		EE04F6CA1C04EE55006D3D4B /* adapters */ = {
+			isa = PBXGroup;
+			children = (
+				EE04F6CD1C04EEB4006D3D4B /* lock_pthreads.c */,
+				EE04F6CB1C04EE69006D3D4B /* threadapi_pthreads.c */,
+			);
+			name = adapters;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EE04F5EB1C04DA6E006D3D4B /* simplesample_http */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EE04F5F31C04DA6E006D3D4B /* Build configuration list for PBXNativeTarget "simplesample_http" */;
+			buildPhases = (
+				EE04F5E81C04DA6E006D3D4B /* Sources */,
+				EE04F5E91C04DA6E006D3D4B /* Frameworks */,
+				EE04F5EA1C04DA6E006D3D4B /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = simplesample_http;
+			productName = simplesample_http;
+			productReference = EE04F5EC1C04DA6E006D3D4B /* simplesample_http */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EE04F5E41C04DA6E006D3D4B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = Microsoft;
+				TargetAttributes = {
+					EE04F5EB1C04DA6E006D3D4B = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
+				};
+			};
+			buildConfigurationList = EE04F5E71C04DA6E006D3D4B /* Build configuration list for PBXProject "simplesample_http" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = EE04F5E31C04DA6E006D3D4B;
+			productRefGroup = EE04F5ED1C04DA6E006D3D4B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EE04F5EB1C04DA6E006D3D4B /* simplesample_http */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EE04F5E81C04DA6E006D3D4B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EE04F6C31C04ED25006D3D4B /* iothub_message.c in Sources */,
+				EE04F5F01C04DA6E006D3D4B /* main.mm in Sources */,
+				EE04F6C21C04ED25006D3D4B /* iothub_client.c in Sources */,
+				EE04F6C91C04EE1C006D3D4B /* iothub_client_ll.c in Sources */,
+				EE04F6C41C04ED25006D3D4B /* iothubtransporthttp.c in Sources */,
+				EE04F6CE1C04EEB4006D3D4B /* lock_pthreads.c in Sources */,
+				EE04F6CC1C04EE69006D3D4B /* threadapi_pthreads.c in Sources */,
+				EE04F6C51C04ED25006D3D4B /* version.c in Sources */,
+				EE04F6C71C04ED5D006D3D4B /* httpapi_osx.mm in Sources */,
+				EE04F6B81C04EA6E006D3D4B /* simplesample_http.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		EE04F5F11C04DA6E006D3D4B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		EE04F5F21C04DA6E006D3D4B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		EE04F5F41C04DA6E006D3D4B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					../../../../../../build_sdks/serializer/Debug,
+					../../../../../../build_sdks/common/Debug,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "../../../../common/inc ../../../inc ../../../../iothub_client/inc";
+			};
+			name = Debug;
+		};
+		EE04F5F51C04DA6E006D3D4B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					../../../../../../build_sdks/serializer/Debug,
+					../../../../../../build_sdks/common/Debug,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "../../../../common/inc ../../../inc ../../../../iothub_client/inc";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EE04F5E71C04DA6E006D3D4B /* Build configuration list for PBXProject "simplesample_http" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EE04F5F11C04DA6E006D3D4B /* Debug */,
+				EE04F5F21C04DA6E006D3D4B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EE04F5F31C04DA6E006D3D4B /* Build configuration list for PBXNativeTarget "simplesample_http" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EE04F5F41C04DA6E006D3D4B /* Debug */,
+				EE04F5F51C04DA6E006D3D4B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EE04F5E41C04DA6E006D3D4B /* Project object */;
+}
