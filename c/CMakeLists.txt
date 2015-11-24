@@ -16,6 +16,10 @@ option(compileOption_CXX "passes a string to the command line of the C++ compile
 SET(PROTON_C_INCLUDES "" CACHE STRING "directory where proton-c include files resides. Not needed if the proton_build.sh file is successfully run")
 SET(PROTON_LIB "qpid-proton" CACHE STRING "name of the qpid c library. This can be a fully qualified path or simply the name of the lib")
 
+if(IN_OPENWRT)
+	ADD_DEFINITIONS("$ENV{TARGET_LDFLAGS}" "$ENV{TARGET_CPPFLAGS}" "$ENV{TARGET_CFLAGS}")
+	INCLUDE_DIRECTORIES("$ENV{TOOLCHAIN_DIR}/usr/include" "$ENV{TARGET_LDFLAGS}" "$ENV{TARGET_CPPFLAGS}" "$ENV{TARGET_CFLAGS}")
+endif()
 
 enable_testing()
 
@@ -93,7 +97,9 @@ macro(compileAsC99)
   if (CMAKE_VERSION VERSION_LESS "3.1")
     if (CMAKE_C_COMPILER_ID STREQUAL "GNU")
       set (CMAKE_C_FLAGS "--std=c99 ${CMAKE_C_FLAGS}")
+	if (NOT IN_OPENWRT)
 	  set (CMAKE_CXX_FLAGS "--std=c++11 ${CMAKE_CXX_FLAGS}")
+	endif()
     endif()
   else()
     set (CMAKE_C_STANDARD 99)

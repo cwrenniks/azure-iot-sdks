@@ -12,6 +12,7 @@ import com.microsoft.azure.iothub.IotHubEventCallback;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.InvalidKeyException;
+import java.util.Scanner;
 
 import javax.naming.SizeLimitExceededException;
 
@@ -113,23 +114,32 @@ public class SendEvent
         System.out.println("Sending the "
                 + "following event messages:");
 
-        for (int i = 0; i < numRequests; ++i)
-        {
-            String msgStr = "Event Message " + Integer.toString(i);
-            try
+        new Thread(() -> {
+            for (int i = 0; i < numRequests; ++i)
             {
-                Message msg = new Message(msgStr);
-                msg.setProperty("messageCount", Integer.toString(i));
-                System.out.println(msgStr);
+                String msgStr = "Event Message " + Integer.toString(i);
+                try
+                {
+                    Message msg = new Message(msgStr);
+                    msg.setProperty("messageCount", Integer.toString(i));
+                    System.out.println(msgStr);
 
-                EventCallback callback = new EventCallback();
-                client.sendEventAsync(msg, callback, i);
+                    EventCallback callback = new EventCallback();
+                    client.sendEventAsync(msg, callback, i);
+                }
+                catch (Exception e)
+                {
+                }
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-            catch (Exception e)
-            {
-            }
-        }
+        }).start();
 
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
         client.close();
 
         System.out.println("Shutting down...");
