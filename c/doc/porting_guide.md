@@ -170,9 +170,9 @@ Now build the C IoT client library for your platform
 
 To verify that the port to the target platform is successful, ensure that data can be sent to the Event Hub endpoint. You can do this by running the samples in the following locations:
 
-- iothub\_schema\_client/Samples/SimpleSample\_HTTP
+- iothub_client/samples/iothub_client_sample_http
 
-- iothub\_schema\_client/Samples/SimpleSample\_AMQP
+- iothub_client/samples/iothub_client_sample_amqp
 
 Both samples send temporary data to an Event Hubs endpoint using either the HTTP or AMQP protocols.
 
