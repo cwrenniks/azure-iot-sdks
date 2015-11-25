@@ -202,7 +202,7 @@ void simplesample_http_run(void)
                     /* wait for commands */
                     while (1)
                     {
-                        IoTHubClient_LL_DoWork(iotHubClientHandle);
+//                        IoTHubClient_LL_DoWork(iotHubClientHandle);
                         ThreadAPI_Sleep(100);
                     }
                 }

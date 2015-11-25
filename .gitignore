@@ -60,6 +60,10 @@ ipch/
 *.sdf
 *.cachefile
 
+# XCode User specific files
+xcuserdata/
+project.xcworkspace/
+
 # Visual Studio profiler
 *.psess
 *.vsp

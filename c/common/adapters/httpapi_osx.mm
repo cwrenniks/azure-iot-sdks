@@ -1,7 +1,52 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+#include <foundation/foundation.h>
+#include <functional>
+#include <mutex>
+#include <condition_variable>
 #include "httpapi.h"
+#include "iot_logging.h"
+#include "buffer_.h"
+
+DEFINE_ENUM_STRINGS(HTTPAPI_RESULT, HTTPAPI_RESULT_VALUES);
+
+std::mutex g_mutex;
+std::condition_variable_any g_ready;
+
+//@interface SessionDelegate : NSObject< NSURLSessionDelegate, NSURLSessionDataDelegate >
+//{
+//@public
+//    NSMutableData* connectionData;
+//}
+//@end
+//
+//@implementation SessionDelegate
+//-(void) URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
+//{
+//    [connectionData appendData: data ];
+//}
+//-(void) URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
+//{
+//    if( error)
+//    {
+//        NSLog(@"Errored out: %@", error.description );
+//    }
+//    g_ready.notify_all();
+//}
+//@end
+
+struct HTTP_HANDLE_OSX
+{
+    NSURLSessionConfiguration* config;
+//    SessionDelegate* delegate;
+    NSURLSession* session;
+    NSURLSessionDataTask* task;
+    NSString* hostName;
+    NSOperationQueue* queue;
+    unsigned int code;
+};
+
 
 HTTPAPI_RESULT HTTPAPI_Init(void)
 {
@@ -29,7 +74,16 @@ void HTTPAPI_Deinit(void)
  */
 HTTP_HANDLE HTTPAPI_CreateConnection(const char* hostName)
 {
-    return NULL;
+    HTTP_HANDLE_OSX* osxHandle = new HTTP_HANDLE_OSX();
+    
+    osxHandle->config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+//    osxHandle->delegate = [[SessionDelegate alloc] init];
+    osxHandle->queue = [[NSOperationQueue alloc] init];
+    
+    osxHandle->session = [NSURLSession sessionWithConfiguration: osxHandle->config delegate: nil delegateQueue: osxHandle->queue ];
+    osxHandle->hostName = [NSString stringWithUTF8String: hostName];
+
+    return (HTTP_HANDLE)osxHandle;
 }
 
 /**
@@ -42,7 +96,124 @@ HTTP_HANDLE HTTPAPI_CreateConnection(const char* hostName)
  */
 void HTTPAPI_CloseConnection(HTTP_HANDLE handle)
 {
+//    HTTP_HANDLE_OSX* osxHandle = (HTTP_HANDLE_OSX*)handle;
+//    
+//    [osxHandle->session finishTasksAndInvalidate];
+//    delete osxHandle;
+}
 
+HTTPAPI_RESULT validateExecRequestParms( HTTP_HANDLE_OSX* osxHandle,
+                                        const char* relativePath,
+                                        const unsigned char* content,
+                                        size_t contentLength)
+{
+    if ((osxHandle == NULL) ||
+        (relativePath == NULL) ||
+        ((content == NULL) && (contentLength > 0))
+        )
+    {
+        LogError("(result = %s)\r\n", ENUM_TO_STRING(HTTPAPI_RESULT, HTTPAPI_INVALID_ARG));
+        return HTTPAPI_INVALID_ARG;
+    }
+    
+    if( osxHandle->hostName == nil ||
+       osxHandle->hostName.length <= 0)
+    {
+        LogError("(hostName is nil = %s)\r\n", "" );
+        return HTTPAPI_INVALID_ARG;
+    }
+    
+    return HTTPAPI_OK;
+}
+
+void createTaskWithData(HTTP_HANDLE_OSX* osxHandle,
+                        NSMutableURLRequest* request,
+                        const unsigned char* content,
+                        size_t contentLength,
+                        void (^handler)(NSData *data,
+                          NSURLResponse *response,
+                          NSError *error) )
+{
+    if( !content || (contentLength == 0 ))
+        return;
+
+    NSData* data = [NSData dataWithBytes: content length: contentLength];
+    osxHandle->task = [osxHandle->session uploadTaskWithRequest: request fromData: data completionHandler: handler];
+}
+
+NSMutableURLRequest* createURLRequest( HTTP_HANDLE_OSX* osxHandle,
+                                      const char* relativePath,
+                                      HTTPAPI_REQUEST_TYPE requestType,
+                                      const unsigned char* content,
+                                      size_t contentLength)
+{
+    if( osxHandle == nil )
+        return nil;
+    
+    if( relativePath == NULL)
+    {
+        LogError("(result = %s)\r\n", ENUM_TO_STRING(HTTPAPI_RESULT, HTTPAPI_INVALID_ARG));
+        return nil;
+    }
+    
+    NSString* base = @"https://";
+    base = [base stringByAppendingString: osxHandle->hostName];
+    NSURL* url                      = [NSURL URLWithString: base];
+    url                             = [NSURL URLWithString: [NSString stringWithUTF8String:relativePath] relativeToURL: url];
+    return [[NSMutableURLRequest alloc] initWithURL: url];
+}
+
+HTTPAPI_RESULT setHeaderValues( HTTP_HANDLE_OSX* osxHandle, HTTP_HEADERS_HANDLE httpHeadersHandle )
+{
+    size_t headersCount = 0L;
+    size_t i;
+    HTTPAPI_RESULT result = HTTPAPI_OK;
+    
+    if (HTTPHeaders_GetHeaderCount(httpHeadersHandle, &headersCount) != HTTP_HEADERS_OK)
+    {
+        LogError("(result = %s)\r\n", ENUM_TO_STRING(HTTPAPI_RESULT, HTTPAPI_INVALID_ARG));
+        return HTTPAPI_INVALID_ARG;
+    }
+    
+    if( headersCount == 0 )
+        return HTTPAPI_OK;
+    
+    NSMutableDictionary* headers = [[NSMutableDictionary alloc] initWithCapacity: headersCount ];
+    
+    for (i = 0; i < headersCount; i++)
+    {
+        char *tempBuffer;
+        if (HTTPHeaders_GetHeader(httpHeadersHandle, i, &tempBuffer) != HTTP_HEADERS_OK)
+        {
+            /* error */
+            result = HTTPAPI_HTTP_HEADERS_FAILED;
+            LogError("(result = %s)\r\n", ENUM_TO_STRING(HTTPAPI_RESULT, result));
+            break;
+        }
+        else
+        {
+            // tempBuffer is in the form "name: value"
+            NSString* rawNameVal = [NSString stringWithUTF8String: tempBuffer];
+            NSArray*  nameVal = [rawNameVal componentsSeparatedByString: @": "];
+            
+            if( nameVal.count != 2 )
+            {
+                result = HTTPAPI_HTTP_HEADERS_FAILED;
+                LogError("(Header name/value( %s ) poorly formed = %s)\r\n", tempBuffer, ENUM_TO_STRING(HTTPAPI_RESULT, result));
+                break;
+            }
+            
+            headers[ nameVal[0]] = nameVal[1];
+        }
+    }
+    
+    if( headers.count )
+    {
+        [osxHandle->config setHTTPAdditionalHeaders: headers];
+        osxHandle->session = [NSURLSession sessionWithConfiguration: osxHandle->config delegate: nil delegateQueue: osxHandle->queue ];
+    }
+    
+    return result;
 }
 
 /**
@@ -98,7 +269,104 @@ HTTPAPI_RESULT HTTPAPI_ExecuteRequest(HTTP_HANDLE handle, HTTPAPI_REQUEST_TYPE r
                                              size_t contentLength, unsigned int* statusCode,
                                              HTTP_HEADERS_HANDLE responseHeadersHandle, BUFFER_HANDLE responseContent)
 {
-    return HTTPAPI_OK;
+    HTTP_HANDLE_OSX* osxHandle = (HTTP_HANDLE_OSX*)handle;
+    __block HTTPAPI_RESULT result = HTTPAPI_OK;
+    NSMutableURLRequest* request = nil;
+    *statusCode = 200;
+    
+    result = validateExecRequestParms( osxHandle, relativePath, content, contentLength );
+    if( result != HTTPAPI_OK)
+    {
+        LogError("(result = %s)\r\n", ENUM_TO_STRING(HTTPAPI_RESULT, result));
+        return HTTPAPI_INVALID_ARG;
+    }
+    
+    //osxHandle->delegate->connectionData = [[NSMutableData alloc] init];
+    
+    request = createURLRequest( osxHandle, relativePath, requestType, content, contentLength );
+    
+    if( request == nil )
+    {
+        LogError( "( Unable to create NSURLRequest: %s", "createURLRequest returned nil");
+        return HTTPAPI_INVALID_ARG;
+    }
+    
+    result = setHeaderValues(osxHandle, httpHeadersHandle );
+    if( result != HTTPAPI_OK)
+    {
+        LogError("(result = %s)\r\n", ENUM_TO_STRING(HTTPAPI_RESULT, result));
+        return HTTPAPI_INVALID_ARG;
+    }
+    
+    void (^handler)(NSData *data,
+                    NSURLResponse *response,
+                    NSError *error) = ^(NSData *data,
+                                        NSURLResponse *response,
+                                        NSError *error)
+    {
+        if( error != nil )
+        {
+            LogError("Errored out: %s", [error.description UTF8String]);
+        }
+        else
+        {
+            *statusCode = (unsigned int)((NSHTTPURLResponse*)response).statusCode;
+            if( data.length )
+            {
+                NSString* strData = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
+                if (BUFFER_build(responseContent, (const unsigned char*)[strData UTF8String], strData.length ) != 0)
+                {
+                    result = HTTPAPI_INSUFFICIENT_RESPONSE_BUFFER;
+                    LogError("(result = %s)\r\n", ENUM_TO_STRING(HTTPAPI_RESULT, result));
+                }
+            }
+        }
+        
+        g_ready.notify_all();
+        return;
+    };
+    
+    switch (requestType)
+    {
+        default:
+            LogError("(Invalid HTTP request type = %s)\r\n", ENUM_TO_STRING(HTTPAPI_RESULT, HTTPAPI_INVALID_ARG));
+            request = nil;
+            break;
+            
+        case HTTPAPI_REQUEST_GET:
+            [request setHTTPMethod: @"GET"];
+            osxHandle->task = [osxHandle->session dataTaskWithRequest: request completionHandler: handler];
+            break;
+            
+        case HTTPAPI_REQUEST_POST:
+        {
+            [request setHTTPMethod: @"POST"];
+            createTaskWithData( osxHandle, request, content, contentLength, handler);
+        }
+            break;
+            
+        case HTTPAPI_REQUEST_PUT:
+            [request setHTTPMethod: @"PUT"];
+            createTaskWithData( osxHandle, request, content, contentLength, handler);
+            break;
+            
+        case HTTPAPI_REQUEST_DELETE:
+            [request setHTTPMethod: @"DELETE"];
+            osxHandle->task = [osxHandle->session dataTaskWithRequest: request completionHandler: handler];
+            break;
+            
+        case HTTPAPI_REQUEST_PATCH:
+            [request setHTTPMethod: @"PATCH"];
+            osxHandle->task = [osxHandle->session dataTaskWithRequest: request completionHandler: handler];
+            break;
+    }
+    
+    [osxHandle->task resume];
+    
+    std::unique_lock<std::mutex> ul( g_mutex );
+    g_ready.wait(ul);
+    
+    return result;
 }
 
 /**
